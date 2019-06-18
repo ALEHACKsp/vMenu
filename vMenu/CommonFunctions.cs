@@ -1282,6 +1282,8 @@ namespace vMenuClient
             }
             vehicle.CurrentRPM = rpm;
 
+            DecorSetBool(vehicle.Handle, "hotwire", true);
+
             // Discard the model.
             SetModelAsNoLongerNeeded(vehicleHash);
         }
