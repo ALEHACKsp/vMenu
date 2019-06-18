@@ -337,7 +337,7 @@ namespace vMenuShared
 
         public static Dictionary<Permission, bool> Permissions { get; private set; } = new Dictionary<Permission, bool>();
         public static bool ArePermissionsSetup { get; set; } = false;
-
+        public static bool ArePermissionsSetup2 { get; set; } = false;
 
 #if SERVER
         /// <summary>
@@ -367,7 +367,7 @@ namespace vMenuShared
         /// <returns></returns>
         private static bool IsAllowedClient(Permission permission, bool checkAnyway)
         {
-            if (ArePermissionsSetup || checkAnyway)
+            if ((ArePermissionsSetup && ArePermissionsSetup2) || checkAnyway)
             {
                 if (allowedPerms.ContainsKey(permission))
                 {
@@ -462,14 +462,6 @@ namespace vMenuShared
 
             Dictionary<Permission, bool> perms = new Dictionary<Permission, bool>();
 
-            // If enabled in the permissions.cfg (disabled by default) then this will give me (only me) the option to trigger some debug commands and 
-            // try out menu options. This only works if I'm in-game on your server, and you have enabled server debugging mode, this way I will never
-            // be able to do something without you actually allowing it.
-            if (player.Identifiers.ToList().Any(id => id == "4510587c13e0b645eb8d24bc104601792277ab98") && IsPlayerAceAllowed(player.Handle, "vMenu.Dev") && ConfigManager.DebugMode)
-            {
-                perms.Add(Permission.Everything, true);
-            }
-
             if (!ConfigManager.GetSettingsBool(ConfigManager.Setting.vmenu_use_permissions))
             {
                 foreach (var p in Enum.GetValues(typeof(Permission)))
@@ -523,13 +515,14 @@ namespace vMenuShared
         {
             if (!IsDuplicityVersion())
             {
+                allowedPerms.Clear();
                 Permissions = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<Permission, bool>>(permissions);
                 // if debug logging.
                 if (GetResourceMetadata(GetCurrentResourceName(), "client_debug_mode", 0) == "true")
                 {
                     Debug.WriteLine("[vMenu] [Permissions] " + Newtonsoft.Json.JsonConvert.SerializeObject(Permissions, Newtonsoft.Json.Formatting.None));
                 }
-
+                ArePermissionsSetup = true;
             }
         }
 #endif

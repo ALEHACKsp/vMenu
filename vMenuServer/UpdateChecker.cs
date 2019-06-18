@@ -21,7 +21,7 @@ namespace vMenuServer
         /// </summary>
         public UpdateChecker()
         {
-            CheckUpdates();
+            //CheckUpdates();
         }
 
         private async void CheckUpdates()

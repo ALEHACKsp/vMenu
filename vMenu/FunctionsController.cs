@@ -83,7 +83,6 @@ namespace vMenuClient
             Tick += VehicleOptions;
             Tick += VehicleOptionsEveryFrame;
             Tick += MoreVehicleOptions;
-            Tick += VoiceChat;
             Tick += TimeOptions;
             Tick += WeatherOptions;
             Tick += WeaponOptions;

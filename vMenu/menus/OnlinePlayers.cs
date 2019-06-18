@@ -44,8 +44,6 @@ namespace vMenuClient
             MenuItem printIdentifiers = new MenuItem("Print Identifiers", "This will print the player's identifiers to the client console (F8). And also save it to the CitizenFX.log file.");
             MenuItem kill = new MenuItem("~r~Kill Player", "Kill this player, note they will receive a notification saying that you killed them. It will also be logged in the Staff Actions log.");
             MenuItem kick = new MenuItem("~r~Kick Player", "Kick the player from the server.");
-            MenuItem ban = new MenuItem("~r~Ban Player Permanently", "Ban this player permanently from the server. Are you sure you want to do this? You can specify the ban reason after clicking this button.");
-            MenuItem tempban = new MenuItem("~r~Ban Player Temporarily", "Give this player a tempban of up to 30 days (max). You can specify duration and ban reason after clicking this button.");
 
             // always allowed
             playerMenu.AddMenuItem(sendMessage);
@@ -79,25 +77,10 @@ namespace vMenuClient
             {
                 playerMenu.AddMenuItem(kick);
             }
-            if (IsAllowed(Permission.OPTempBan))
-            {
-                playerMenu.AddMenuItem(tempban);
-            }
-            if (IsAllowed(Permission.OPPermBan))
-            {
-                playerMenu.AddMenuItem(ban);
-                ban.LeftIcon = MenuItem.Icon.WARNING;
-            }
 
             playerMenu.OnMenuClose += (sender) =>
             {
                 playerMenu.RefreshIndex();
-                ban.Label = "";
-            };
-
-            playerMenu.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) =>
-            {
-                ban.Label = "";
             };
 
             // handle button presses for the specific player's menu.
@@ -227,26 +210,6 @@ namespace vMenuClient
                         KickPlayer(currentPlayer, true);
                     else
                         Notify.Error("You cannot kick yourself!");
-                }
-                // temp ban
-                else if (item == tempban)
-                {
-                    BanPlayer(currentPlayer, false);
-                }
-                // perm ban
-                else if (item == ban)
-                {
-                    if (ban.Label == "Are you sure?")
-                    {
-                        ban.Label = "";
-                        UpdatePlayerlist();
-                        playerMenu.GoBack();
-                        BanPlayer(currentPlayer, true);
-                    }
-                    else
-                    {
-                        ban.Label = "Are you sure?";
-                    }
                 }
             };
 
