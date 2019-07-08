@@ -1,7 +1,15 @@
 {
   "vehicles": [
-    "addonvehiclename1",
-    "addonvehiclename2"
+	"rx7",
+	"mlancer",
+	"180sx",
+	"silvia",
+	"911gt3r",
+	"458gt2",
+	"gtrwb",
+	"lp770",
+	"m4gts",
+	"phr2018"
   ],
   "peds": [
     "addonpedname1",
