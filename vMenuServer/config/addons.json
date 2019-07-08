@@ -12,8 +12,9 @@
 	"phr2018"
   ],
   "peds": [
-    "addonpedname1",
-    "addonpedname2"
+    "CWReverseFlashGlow",
+    "CWTheFlashS4",
+    "goblin"
   ],
   "weapons": [
     "addonweaponname1",
